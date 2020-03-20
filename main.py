@@ -6,23 +6,26 @@ import cv2
 import time
 
 video = video.Video()
-time.sleep(1.0)   #let camera autofocus + autosaturation settle
+time.sleep(1.0)  # let camera autofocus + autosaturation settle
 video.nextFrame()
 video.testBackgroundFrame()
 
 while 1:
-        #get next frame of video
+    try:
+        # get next frame of video
         video.nextFrame()
-        video.testBackgroundFrame() #press n to delete background?
+        video.testBackgroundFrame()  # press n to delete background?
         video.updateBackground()
         video.compare()
         video.showFrame()
         video.testSettings()
         k = cv2.waitKey(30) & 0xff
         if video.testDestroy():
-        # if k == 27:
-                break
+            # if k == 27:
+            break
+    except:
+        pass
 
-#video.release()
+# video.release()
 cv2.destroyAllWindows()
 sys.exit()
