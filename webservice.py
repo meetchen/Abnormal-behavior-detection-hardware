@@ -32,7 +32,9 @@ class Webservice(object):
                   "subject": subject,
                   "text": self.mailbody})
 
-    def post_to_client(self, msg, person_id):
+    def post_to_client(self, msg, person_id, attachment):
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        file_path = os.path.join(dir_path, attachment)
         url = 'https://www.xust17.top/index/behavior/receiver'
         data = {
             'user': 'cjc',
@@ -40,8 +42,10 @@ class Webservice(object):
             'msg': msg,
             'personId': person_id,
         }
-        result = requests.post(url, data)
-        print("It was successfully sent to the server .Server response："+result.text)
+        files = [("attachment", (attachment, open(file_path, "rb").read()))]
+        result = requests.post(url, data=data, files=files)
+        print(result.text)
+        # print("It was successfully sent to the server .Server response：" + result.text)
 
     def alarm(self, detectiontype, personid, attachment):
         # tempurl = self.url
@@ -49,5 +53,5 @@ class Webservice(object):
         # response = requests.get(tempurl, data=self.data)
         # print response
         subject = 'Alarm triggered due to ' + detectiontype + ' by person id ' + str(personid)
-        print(subject + ' with attachment: ' + attachment)
-        self.post_to_client(subject, personid)
+        # print(subject + ' with attachment: ' + attachment)
+        self.post_to_client(subject, personid, attachment)
