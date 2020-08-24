@@ -14,7 +14,7 @@
 class Settings(object):
 	
 	def __init__(self):
-		self.debug = 0 # boolean
+		self.debug = 1 # boolean
 		# self.source = './storedvideos/fall-006.avi'#0 # camera source
 		# self.source = './storedvideos/fall-008s.avi'#0 # camera source
 		self.source = './storedvideos/fallc009b.avi'#0 # camera source
